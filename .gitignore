@@ -2,6 +2,7 @@
 node_modules
 *.log
 .idea
+*.idea
 explorations
 TODOs.md
 dist/*.gz

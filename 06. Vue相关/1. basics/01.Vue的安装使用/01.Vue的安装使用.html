@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/Vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h2>{{msg}}</h2>
+</div>
+<script type="text/javascript">
+    /**
+     * Vue 的使用 可以直接通过引入 vue.js文件的方式引入,这种方式引入Vue, 会在全局 window上添加一个 Vue变量
+     * 我们可以直接使用该 Vue 类
+     */
+    const app = new Vue({
+        el: '#app',
+        data: {msg: 'Hello Vue!'}
+    })
+</script>
+</body>
+</html>
