@@ -92,5 +92,31 @@ setInterval(tick, 1000)
 /**
  * ReactDOM 首先会比较元素内容先后的不同, 而在渲染过程中只会更新改变了的部分
  *
- * 即便我们每秒都创建了一个描述整个UI树的新元素,  React DOMy也只会更新渲染文本节点中发生变化的内容
+ * 即便我们每秒都创建了一个描述整个UI树的新元素,  React DOM也只会更新渲染文本节点中发生变化的内容
  */
+
+
+
+/** ---------- 函数式组件 ------------ */
+
+// function FunctionalComponent(props) {
+//     return (
+//         <div>
+//             <h1>{props.name}</h1>
+//         </div>)
+// }
+//
+// ReactDOM.render(<FunctionalComponent name={"Gene"}/>, document.getElementById('root'))
+
+/** ======== 类组件 =============== */
+class ClassComponent extends React.Component {
+    render() {
+        return (
+            <div>
+                <h2>{this.props.name}</h2>
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(<ClassComponent name={"杨阳阳"} />,document.getElementById('root'))
