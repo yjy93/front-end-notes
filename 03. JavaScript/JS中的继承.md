@@ -26,7 +26,7 @@
 > function Cat() {
 >     Animal.call(this) // 这时父类里的this是 Cat{}
 > }
-> var cat = new Cat(); // new 的时候执行 Obj2 构造函数, 调用父类
+> var cat = new Cat(); // new 的时候执行 Cat 构造函数, 调用父类
 > ```
 
 ### 构造函数继承的原理
@@ -35,7 +35,7 @@
 
 ### 构造函数继承的缺点
 
-> :triangular_flag_on_post:  由上面代码我们可以看出, 构造函数继承, 只能继承父类**构造函数上**  的属性和方法, **不能继承父类原型上**的属性和方法.   
+> :triangular_flag_on_post:  由上面代码我们可以看出, 构造函数继承, 只能继承父类**构造函数上**  的属性和方法, ==**不能继承父类原型上**==的属性和方法.    
 
 ## 通过原型链继承
 
@@ -158,19 +158,20 @@
 
 > ```js
 > function Parent() {
->     this.name = 'I am Parent';
->     this.arr = [1,2,3]
+>  this.name = 'I am Parent';
+>  this.arr = [1,2,3]
 > }
 > 
 > Parent.prototype.speak = function () {
->     console.log('我是父类原型上的方法 speak --> ');
+>  console.log('我是父类原型上的方法 speak --> ');
 > };
 > function Child() {
->     Parent.call(this); // 构造函数继承的 call 方法
->     this.type = 'child'
+>  Parent.call(this); // 构造函数继承的 call 方法
+>  this.type = 'child'
 > }
 > 
 > // 子类原型指向一个新创建的对象,这个对象依据父类原型创建
+> // 也就是说, 子类原型直接指向父类原型. 而且这是一个拷贝父类原型的一个新对象.
 > Child.prototype = Object.create(Parent.prototype);
 > Child.prototype.constructor = Child; // 让子类原型的构造函数 重新指回 子类本身构造函数
 > 
