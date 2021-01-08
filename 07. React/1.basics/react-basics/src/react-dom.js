@@ -26,12 +26,15 @@ function createDOM(vdom) {
     }
     // 否则 它就是一个虚拟 DOM 对象了, 也就是 React 元素了.
     let {type, props} = vdom
-    console.log(99999999,vdom,props);
-    let dom = document.createElement(type);
+    let dom;
+    if (typeof type === "function") { // 自定义函数组件
+        return mountFunctionComponent(vdom)
+    } else {
+        原生组件
+        dom = document.createElement(type);
+    }
     // 使用 虚拟 DOM 的属性更新刚创建出来的真实 DOM 的属性
-    console.log('123123,上上上--->',vdom,props);
     updateProps(dom, props)
-    console.log('123123,--->',props);
     // 在这里处理 props.children 属性
     // 如果只有一个 儿子, 并且这个儿子是文本
     if (typeof props.children === "string" || typeof props.children === "number") {
@@ -52,13 +55,23 @@ function createDOM(vdom) {
 }
 
 /**
+ * 把一个类型为 自定义函数组件的 虚拟DOM转换为 真实 DOM 并返回.
+ * @param vdom
+ */
+function mountFunctionComponent(vdom) {
+    let {type: FunctionComponent, props} = vdom
+    let renderVdom = FunctionComponent(props)
+    return createDOM(renderVdom)
+}
+
+/**
  * @param childrenVdom 儿子们的虚拟 DOM
  * @param parentDOM 父亲的真实 DOM
  */
 function reconcileChildren(childrenVdom, parentDOM) {
     for (let i = 0; i < childrenVdom.length; i++) {
         let childVdom = childrenVdom[i]
-        render(childVdom,parentDOM)
+        render(childVdom, parentDOM)
     }
 }
 
