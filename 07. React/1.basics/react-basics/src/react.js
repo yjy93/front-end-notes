@@ -7,6 +7,8 @@
  * @param config 配置对象
  * @param children 儿子节点
  */
+import Component from './Component'
+
 function createElement(type, config, children) {
     if (config) {
         delete config.__source;
@@ -24,5 +26,5 @@ function createElement(type, config, children) {
     }
 }
 
-const React = {createElement}
+const React = {createElement, Component}
 export default React

@@ -28,9 +28,13 @@ function createDOM(vdom) {
     let {type, props} = vdom
     let dom;
     if (typeof type === "function") { // 自定义函数组件
-        return mountFunctionComponent(vdom)
+        if (type.isReactComponent) { // 说明这是一个类组件
+            return mountClassComponent(vdom)
+        } else {
+            return mountFunctionComponent(vdom)
+        }
     } else {
-        原生组件
+        // 原生组件
         dom = document.createElement(type);
     }
     // 使用 虚拟 DOM 的属性更新刚创建出来的真实 DOM 的属性
@@ -62,6 +66,27 @@ function mountFunctionComponent(vdom) {
     let {type: FunctionComponent, props} = vdom
     let renderVdom = FunctionComponent(props)
     return createDOM(renderVdom)
+}
+
+/**
+ * 挂载类组件
+ * @param vdom 类型为 类组件的虚拟 DOM
+ * 1. 创建类组件的实例
+ * 2. 调用类组价实例的 render 方法,获得返回的虚拟 DOM (React 元素)
+ * 3. 把返回的虚拟 DOM 转成真实 DOM 进行挂载.
+ */
+function mountClassComponent(vdom) {
+    // 解构类的定义 和 类 的属性对象
+    let {type, props} = vdom
+    // 1. 创建类组件的实例
+    let classInstance = new type(props)
+    // 2. 调用类组件实例的 render 方法
+    let renderVdom = classInstance.render()
+    // 3. 把返回的虚拟 DOM 转成真实 DOM 进行挂载
+    let dom = createDOM(renderVdom)
+    // 为以后类组件的更新, 把 真实 DOM 挂载到了类的实例上
+    classInstance.dom = dom
+    return dom
 }
 
 /**
